@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TodoList } from './TodoList';
-import { useGetTodos } from '../features/todos/queries';
+import { useGetTodos } from '../../features/todos/queries';
 import type { Mock } from 'vitest';
 import { within, expect } from 'storybook/test';
 
@@ -12,9 +12,15 @@ const meta: Meta<typeof TodoList> = {
 export default meta;
 type Story = StoryObj<typeof TodoList>;
 
+const useGetTodosMock = (useGetTodos as unknown as Mock).mockReturnValue({
+  isLoading: false,
+  isError: false,
+  data: [],
+});
+
 export const Default: Story = {
   beforeEach: () => {
-    (useGetTodos as unknown as Mock).mockReturnValue({
+    useGetTodosMock.mockReturnValue({
       isLoading: false,
       isError: false,
       data: [
@@ -46,7 +52,7 @@ export const Default: Story = {
 
 export const Loading: Story = {
   beforeEach: () => {
-    (useGetTodos as unknown as Mock).mockReturnValue({
+    useGetTodosMock.mockReturnValue({
       isLoading: true,
       isError: false,
       data: undefined,
@@ -60,7 +66,7 @@ export const Loading: Story = {
 
 export const Error: Story = {
   beforeEach: () => {
-    (useGetTodos as unknown as Mock).mockReturnValue({
+    useGetTodosMock.mockReturnValue({
       isLoading: false,
       isError: true,
       data: undefined,
@@ -74,7 +80,7 @@ export const Error: Story = {
 
 export const Empty: Story = {
   beforeEach: () => {
-    (useGetTodos as unknown as Mock).mockReturnValue({
+    useGetTodosMock.mockReturnValue({
       isLoading: false,
       isError: false,
       data: [],

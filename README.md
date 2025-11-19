@@ -1,4 +1,4 @@
-# Demonstration of using sb.mock() with Storybook and Vitest
+# Demonstration of using sb.mock() from Storybook
 
 This repository showcases how to use the `sb.mock()` function from Storybook to mock API responses for components during development and testing. It integrates Storybook with Vitest for seamless component testing.
 
