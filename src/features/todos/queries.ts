@@ -4,8 +4,6 @@ import { fetchTodos } from "./api";
 export function useGetTodos() {
     return useQuery({
         queryKey: ["todos"],
-        queryFn: async () => {
-            return fetchTodos();
-        },
+        queryFn: fetchTodos,
     });
 }
