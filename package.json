@@ -1,5 +1,5 @@
 {
-  "name": "my-vue-app",
+  "name": "storybook-mock",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest"
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "watch": "tsc -w --noEmit"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",

@@ -1,12 +1,7 @@
-// 無料で使えるTodo APIのURL
+import type { TodoItem } from "./model";
+
 const API_URL = "https://jsonplaceholder.typicode.com/todos";
 
-export type TodoItem = {
-    userId: number;
-    id: number;
-    title: string;
-    completed: boolean;
-}
 export async function fetchTodos() {
   const response = await fetch(API_URL);
   if (!response.ok) {
