@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { TodoList } from './TodoList';
 import { useGetTodos } from '../features/todos/queries';
 import type { Mock } from 'vitest';
+import { within, expect } from 'storybook/test';
 
 const meta: Meta<typeof TodoList> = {
   title: 'Components/TodoList',
@@ -23,6 +24,24 @@ export const Default: Story = {
       ],
     });
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await expect(canvas.getByText('Tasks')).toBeInTheDocument();
+    await expect(canvas.getByText('Manage your daily goals.')).toBeInTheDocument();
+
+    await expect(canvas.getByText('Learn Storybook')).toBeInTheDocument();
+    await expect(canvas.getByText('Build a Todo App')).toBeInTheDocument();
+    await expect(canvas.getByText('Master Tailwind CSS')).toBeInTheDocument();
+    const items = canvas.getAllByRole('listitem');
+    await expect(items).toHaveLength(3);
+
+    const firstCheckbox = within(items[0]).getByRole('checkbox');
+    await expect(firstCheckbox).not.toBeChecked();
+
+    const secondCheckbox = within(items[1]).getByRole('checkbox');
+    await expect(secondCheckbox).toBeChecked();
+  },
 };
 
 export const Loading: Story = {
@@ -32,6 +51,10 @@ export const Loading: Story = {
       isError: false,
       data: undefined,
     });
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.queryByText('Tasks')).not.toBeInTheDocument();
   },
 };
 
@@ -43,6 +66,10 @@ export const Error: Story = {
       data: undefined,
     });
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('Error loading todos. Please try again later.')).toBeInTheDocument();
+  },
 };
 
 export const Empty: Story = {
@@ -52,5 +79,9 @@ export const Empty: Story = {
       isError: false,
       data: [],
     });
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('No tasks yet.')).toBeInTheDocument();
   },
 };
